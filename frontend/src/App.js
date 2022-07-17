@@ -13,14 +13,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header/>
+        <Header />
         <ToastContainer position="top-center" />
         <Routes>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/add' element={<AddEdit/>}/>
-          <Route path='/update/:id' element={<AddEdit/>}/>
-          <Route path='/about' element={<About/>}/>
-          <Route path='/view/:id' element={<View/>}/>
+          <Route path="/" element={<Home />} />
+          <Route path="/add" element={<AddEdit />} />
+          <Route path="/update/:id" element={<AddEdit />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/view/:id" element={<View />} />
         </Routes>
       </div>
     </BrowserRouter>
