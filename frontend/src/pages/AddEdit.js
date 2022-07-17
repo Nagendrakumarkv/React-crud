@@ -16,7 +16,6 @@ const AddEdit = () => {
   const { name, email, contact } = state;
 
   const { id } = useParams();
-  console.log(id);
 
   const navigate = useNavigate();
 
@@ -48,8 +47,6 @@ const AddEdit = () => {
   };
 
   const handleInputChange = (e) => {
-    console.log(e.target.name);
-
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
