@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
 import { toast } from "react-toastify";
@@ -50,18 +50,18 @@ const Home = () => {
                   <td>{user.email}</td>
                   <td>{user.contact}</td>
                   <td>
-                    <Link to={`/update/${user.id}`}>
+                    <Link to={`/update/${user._id}`}>
                       <button className="btn btn-edit">Edit</button>
                     </Link>
                     <button
                       className="btn btn-delete"
                       onClick={() => {
-                        onDeleteUser(user.id);
+                        onDeleteUser(user._id);
                       }}
                     >
                       Delete
                     </button>
-                    <Link to={`/view/${user.id}`}>
+                    <Link to={`/view/${user._id}`}>
                       <button className="btn btn-view">View</button>
                     </Link>
                   </td>

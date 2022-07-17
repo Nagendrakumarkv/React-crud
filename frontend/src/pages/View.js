@@ -17,9 +17,10 @@ const View = () => {
   const getSingleUser = async (id) => {
     const response = await axios.get(`http://localhost:5000/user/${id}`);
     if (response.status === 200) {
-      setUser({ ...response.data[0] });
+      setUser({ ...response.data });
     }
   };
+
   return (
     <div style={{ marginTop: "150px" }}>
       <div className="card">

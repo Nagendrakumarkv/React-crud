@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLoation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./AddEdit.css";
 import { toast } from "react-toastify";
@@ -32,6 +32,7 @@ const AddEdit = () => {
       toast.success(response.data);
     }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !email || !contact) {
@@ -54,7 +55,7 @@ const AddEdit = () => {
   const getSingleUserData = async (id) => {
     const response = await axios.get(`http://localhost:5000/user/${id}`);
     if (response.status === 200) {
-      setState({ ...response.data[0] });
+      setState({ ...response.data });
     }
   };
 
