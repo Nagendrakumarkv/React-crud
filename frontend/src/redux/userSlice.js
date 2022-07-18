@@ -17,9 +17,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     userInfo: {
-      name: "nagendra",
-      email: "naga@gmail.com",
-      contact: 9883838838,
+      name: localStorage.getItem("state").split(",")[0],
+      email: localStorage.getItem("state").split(",")[1],
+      contact: localStorage.getItem("state").split(",")[2],
     },
     pending: false,
     error: false,
@@ -47,6 +47,11 @@ export const userSlice = createSlice({
     [defaultActionUpdateUser.fulfilled]: (state, action) => {
       state.userInfo = action.payload;
       state.pending = false;
+      localStorage.setItem("state", [
+        state.userInfo.name,
+        state.userInfo.email,
+        state.userInfo.contact,
+      ]);
     },
     [defaultActionUpdateUser.rejected]: (state) => {
       state.error = true;
