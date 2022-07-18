@@ -1,19 +1,24 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import { getSingleUser } from "../redux/apiCalls";
+import { Link, useLocation } from "react-router-dom";
 import "./View.css";
 
+//redux 6 7
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleUser } from "../redux/apiCalls";
+
 const View = () => {
-  const { id } = useParams();
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
 
-  const dispatch=useDispatch();
+  //redux 13 15
+  const dispatch = useDispatch();
 
-  const singleUserData=useSelector((state)=>state.user.singleUser)
+  const singleUserData = useSelector((state) => state.user.singleUser);
 
   useEffect(() => {
     if (id) {
-      getSingleUser(id,dispatch)
+      //redux 20
+      getSingleUser(id, dispatch);
     }
   }, [id]);
 

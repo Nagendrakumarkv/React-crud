@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./AddEdit.css";
 import { toast } from "react-toastify";
+
+//redux 7 8
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, updateUser } from "../redux/apiCalls";
 
@@ -12,16 +14,16 @@ const initialState = {
 };
 
 const AddEdit = () => {
-
   const [state, setState] = useState(initialState);
 
   const { name, email, contact } = state;
 
   const { id } = useParams();
 
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
+
+  //redux 27 29
+  const dispatch = useDispatch();
 
   const singleUserData = useSelector((state) =>
     state.user.users.find((user) => user._id === id)
@@ -32,8 +34,10 @@ const AddEdit = () => {
     if (!name || !email || !contact) {
       toast.error("please fill the fields");
     } else if (!id) {
+      //redux 39
       addUser(state, dispatch);
     } else {
+      //redux 42
       updateUser(state, id, dispatch);
     }
     setTimeout(() => {

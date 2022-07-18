@@ -1,26 +1,26 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
-import { toast } from "react-toastify";
+
+//redux 6 7
 import { useDispatch, useSelector } from "react-redux";
 import { deleteUser, getUsers } from "../redux/apiCalls";
 
 const Home = () => {
+  
+  //redux 12 14
   const dispatch = useDispatch();
 
   const users = useSelector((state) => state.user.users);
 
   useEffect(() => {
+    //redux 18
     getUsers(dispatch);
   }, [dispatch]);
 
   const onDeleteUser = async (id) => {
     if (window.confirm("Are you sure to delete this user")) {
-      // const response = await axios.delete(`http://localhost:5000/user/${id}`);
-      // if (response.status === 200) {
-      //   toast.success(response.data);
-      //   getUsers();
-      // }
+      //redux 24
       deleteUser(id, dispatch);
     }
   };
