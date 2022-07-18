@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import "./AddEdit.css";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-
-//react redux 9,10
-import { defaultActionUpdateUser } from "../redux/userSlice";
-// import { customizedActionUpdateUser } from "../redux/apiCalls";
+import { addUser, updateUser } from "../redux/apiCalls";
 
 const initialState = {
   name: "",
@@ -16,52 +12,29 @@ const initialState = {
 };
 
 const AddEdit = () => {
+
   const [state, setState] = useState(initialState);
 
   const { name, email, contact } = state;
 
   const { id } = useParams();
 
-  //react redux 26,28
-  const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  const addUser = async (data) => {
-    const response = await axios.post("http://localhost:5000/user", data);
-    if (response.status === 200) {
-      toast.success(response.data);
-    }
-  };
-
-  const updateUser = async (data, id) => {
-    let name = data.name;
-    console.log(name);
-    const response = await axios.put(`http://localhost:5000/user/${id}`, data);
-    if (response.status === 200) {
-      toast.success(response.data);
-    }
-  };
+  const singleUserData = useSelector((state) =>
+    state.user.users.find((user) => user._id === id)
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name || !email || !contact) {
       toast.error("please fill the fields");
     } else if (!id) {
-      addUser(state);
-      
-      //react customized actions
-      //customizedActionUpdateUser({name,email,contact},dispatch)
+      addUser(state, dispatch);
     } else {
-      updateUser(state, id);
-
-      //react customized actions
-      //customizedActionUpdateUser({name,email,contact},dispatch)
-
-      //redux default actions
-      dispatch(defaultActionUpdateUser({ name, email, contact }));
+      updateUser(state, id, dispatch);
     }
     setTimeout(() => {
       navigate("/");
@@ -73,15 +46,10 @@ const AddEdit = () => {
     setState({ ...state, [name]: value });
   };
 
-  const getSingleUserData = async (id) => {
-    const response = await axios.get(`http://localhost:5000/user/${id}`);
-    if (response.status === 200) {
-      setState({ ...response.data });
-    }
-  };
-
   useEffect(() => {
-    getSingleUserData(id);
+    if (singleUserData !== undefined) {
+      setState(singleUserData);
+    }
   }, [id]);
 
   return (
@@ -100,7 +68,7 @@ const AddEdit = () => {
           type="text"
           id="name"
           name="name"
-          placeholder={user.name}
+          placeholder={name}
           onChange={handleInputChange}
           value={name}
         />
@@ -109,7 +77,7 @@ const AddEdit = () => {
           type="email"
           id="email"
           name="email"
-          placeholder={user.email}
+          placeholder={email}
           onChange={handleInputChange}
           value={email}
         />
@@ -118,7 +86,7 @@ const AddEdit = () => {
           type="number"
           id="contact"
           name="contact"
-          placeholder={user.contact}
+          placeholder={contact}
           onChange={handleInputChange}
           value={contact}
         />

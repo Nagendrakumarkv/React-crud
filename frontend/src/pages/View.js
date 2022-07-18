@@ -1,25 +1,21 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { getSingleUser } from "../redux/apiCalls";
 import "./View.css";
 
 const View = () => {
-  const [user, setUser] = useState(null);
-
   const { id } = useParams();
+
+  const dispatch=useDispatch();
+
+  const singleUserData=useSelector((state)=>state.user.singleUser)
 
   useEffect(() => {
     if (id) {
-      getSingleUser(id);
+      getSingleUser(id,dispatch)
     }
   }, [id]);
-
-  const getSingleUser = async (id) => {
-    const response = await axios.get(`http://localhost:5000/user/${id}`);
-    if (response.status === 200) {
-      setUser({ ...response.data });
-    }
-  };
 
   return (
     <div style={{ marginTop: "150px" }}>
@@ -33,15 +29,15 @@ const View = () => {
           <br />
           <br />
           <strong>Name: </strong>
-          <span>{user && user.name} </span>
+          <span>{singleUserData && singleUserData.name} </span>
           <br />
           <br />
           <strong>Email: </strong>
-          <span>{user && user.email} </span>
+          <span>{singleUserData && singleUserData.email} </span>
           <br />
           <br />
           <strong>Contact: </strong>
-          <span>{user && user.contact} </span>
+          <span>{singleUserData && singleUserData.contact} </span>
           <br />
           <br />
           <Link to="/">

@@ -5,7 +5,6 @@ const {
   getUser,
   deleteUser,
   updateUser,
-  postReduxStateUser,
 } = require("../controllers/user");
 
 const router = express.Router();
@@ -19,7 +18,5 @@ router.get("/user/:id", getUser);
 router.delete("/user/:id", deleteUser);
 
 router.put("/user/:id", updateUser);
-
-router.post("/user/redux_state_user/:id",postReduxStateUser)
 
 module.exports = router;

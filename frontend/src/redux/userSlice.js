@@ -1,68 +1,110 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-import axios from "axios";
-
-export const defaultActionUpdateUser = createAsyncThunk(
-  "update/user",
-  async (user) => {
-    const res = await axios.post(
-      "http://localhost:5000/user/redux_state_user/123",
-      user
-    );
-    return res.data;
-  }
-);
+import { createSlice } from "@reduxjs/toolkit";
 
 export const userSlice = createSlice({
   name: "user",
   initialState: {
-    userInfo: {
-      name: localStorage.getItem("state").split(",")[0],
-      email: localStorage.getItem("state").split(",")[1],
-      contact: localStorage.getItem("state").split(",")[2],
-    },
+    users: [],
+    singleUser: [],
     pending: false,
     error: false,
   },
 
   //react customized ations method
   reducers: {
-    // updateStart: (state) => {
-    //   state.pending = true;
-    // },
-    // updateSuccess: (state, action) => {
-    //   state.pending = false;
-    //   state.userInfo = action.payload;
-    // },
-    // updateError: (state) => {
-    //   state.error = true;
-    //   state.pending = false;
-  },
-
-  //react default actions method
-  extraReducers: {
-    [defaultActionUpdateUser.pending]: (state) => {
+    
+    //Get all users
+    getUserStart: (state) => {
       state.pending = true;
+      state.error = false;
     },
-    [defaultActionUpdateUser.fulfilled]: (state, action) => {
-      state.userInfo = action.payload;
+    getUserSuccess: (state, action) => {
       state.pending = false;
-      localStorage.setItem("state", [
-        state.userInfo.name,
-        state.userInfo.email,
-        state.userInfo.contact,
-      ]);
+      state.users = action.payload;
     },
-    [defaultActionUpdateUser.rejected]: (state) => {
+    getUserError: (state) => {
       state.error = true;
-      state.pen = false;
+      state.pending = false;
+    },
+
+    //Get all users
+    getSingleUserStart: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    getSingleUserSuccess: (state, action) => {
+      state.pending = false;
+      state.singleUser = action.payload;
+    },
+    getSingleUserError: (state) => {
+      state.error = true;
+      state.pending = false;
+    },
+
+    //Add user
+    addUserStart: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    addUserSuccess: (state, action) => {
+      state.pending = false;
+      state.users.push(action.payload);
+    },
+    addUserError: (state) => {
+      state.error = true;
+      state.pending = false;
+    },
+
+    //Delete user
+    deleteUserStart: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    deleteUserSuccess: (state, action) => {
+      state.pending = false;
+      state.users.splice(
+        state.users.findIndex((user) => user._id === action.payload),
+        1
+      );
+    },
+    deleteUserError: (state) => {
+      state.error = true;
+      state.pending = false;
+    },
+
+    //Update user
+    updateUserStart: (state) => {
+      state.pending = true;
+      state.error = false;
+    },
+    updateUserSuccess: (state, action) => {
+      state.pending = false;
+      state.users[
+        state.users.findIndex((user) => user._id === action.payload.id)
+      ] = action.payload.user;
+    },
+    updateUserError: (state) => {
+      state.error = true;
+      state.pending = false;
     },
   },
 });
 
-//(default actions method) don't need export beacuse react exported the actions  by default
-
-//(customized actions method) needs to export
-// export const { updateStart, updateSuccess, updateError } = userSlice.actions;
+export const {
+  getUserStart,
+  getUserSuccess,
+  getUserError,
+  deleteUserStart,
+  deleteUserSuccess,
+  deleteUserError,
+  addUserStart,
+  addUserSuccess,
+  addUserError,
+  updateUserStart,
+  updateUserSuccess,
+  updateUserError,
+  getSingleUserStart,
+  getSingleUserSuccess,
+  getSingleUserError,
+} = userSlice.actions;
 
 export default userSlice.reducer;

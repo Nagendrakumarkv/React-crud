@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import "./Home.css";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteUser, getUsers } from "../redux/apiCalls";
 
 const Home = () => {
-  const [data, setData] = useState([]);
+  const dispatch = useDispatch();
+
+  const users = useSelector((state) => state.user.users);
 
   useEffect(() => {
-    getUsers();
-  }, []);
-
-  const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users");
-    if (response.status === 200) {
-      setData(response.data);
-    }
-  };
+    getUsers(dispatch);
+  }, [dispatch]);
 
   const onDeleteUser = async (id) => {
     if (window.confirm("Are you sure to delete this user")) {
-      const response = await axios.delete(`http://localhost:5000/user/${id}`);
-      if (response.status === 200) {
-        toast.success(response.data);
-        getUsers();
-      }
+      // const response = await axios.delete(`http://localhost:5000/user/${id}`);
+      // if (response.status === 200) {
+      //   toast.success(response.data);
+      //   getUsers();
+      // }
+      deleteUser(id, dispatch);
     }
   };
 
@@ -41,8 +38,8 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {data &&
-            data.map((user, index) => {
+          {users &&
+            users.map((user, index) => {
               return (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>

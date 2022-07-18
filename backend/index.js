@@ -29,7 +29,7 @@ app.use(cors());
 app.use("/", userRoutes);
 
 app.all("*", (req, res) => {
-  res.send("Invalid url or this route url is not available");
+  res.send("invalid url");
 });
 
 const port = process.env.PORT;

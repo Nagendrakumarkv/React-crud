@@ -19,22 +19,14 @@ exports.addUser = (req, res) => {
     contact: req.body.contact,
   });
   try {
-    console.log(user);
     user.save();
-    res.send("User added successfully");
+    res.send(user);
   } catch (err) {
-    console.log("error");
     res.status(500).json({
       message: "user added failed!",
     });
   }
 };
-
-exports.postReduxStateUser=(req,res)=>{
-  setTimeout(()=>{
-    res.send(req.body  )
-  },2000)
-}
 
 exports.getUser = async (req, res) => {
   try {
