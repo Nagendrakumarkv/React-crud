@@ -25,7 +25,7 @@ export const userSlice = createSlice({
     error: false,
   },
 
-  //react customized ations
+  //react customized ations method
   reducers: {
     // updateStart: (state) => {
     //   state.pending = true;

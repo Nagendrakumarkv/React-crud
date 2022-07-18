@@ -11,6 +11,7 @@ const About = () => {
   return (
     <div style={{ marginTop: "150px" }}>
       <h2>
+        {/* react-redux 15 */}
         <p> {name}</p>
         This is React User Contact Management System Application using Node and
         Express JS along with Routing

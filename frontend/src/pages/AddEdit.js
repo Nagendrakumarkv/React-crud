@@ -51,6 +51,8 @@ const AddEdit = () => {
       toast.error("please fill the fields");
     } else if (!id) {
       addUser(state);
+      
+      //react customized actions
       //customizedActionUpdateUser({name,email,contact},dispatch)
     } else {
       updateUser(state, id);

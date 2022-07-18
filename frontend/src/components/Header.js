@@ -24,6 +24,7 @@ const Header = () => {
   return (
     <div className="header">
       <p className="logo">User Mangement System</p>
+      {/* react redux 28 */}
       <p style={{ color: "red" }}>{name}</p>
       <div className="header-right">
         <Link to="/">
