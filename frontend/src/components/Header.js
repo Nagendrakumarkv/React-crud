@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 
+//react redux 6
+import { useSelector } from "react-redux";
+
 const Header = () => {
   const [activeTab, setActiveTab] = useState("Home");
   const location = useLocation();
+
+  //react redux 13
+  const name = useSelector((state) => state.user.userInfo.name);
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -18,6 +24,7 @@ const Header = () => {
   return (
     <div className="header">
       <p className="logo">User Mangement System</p>
+      <p style={{ color: "red" }}>{name}</p>
       <div className="header-right">
         <Link to="/">
           <p

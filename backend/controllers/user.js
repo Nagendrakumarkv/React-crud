@@ -30,6 +30,12 @@ exports.addUser = (req, res) => {
   }
 };
 
+exports.postReduxStateUser=(req,res)=>{
+  setTimeout(()=>{
+    res.send(req.body  )
+  },2000)
+}
+
 exports.getUser = async (req, res) => {
   try {
     const singleUser = await User.findById(req.params.id);

@@ -3,6 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "./AddEdit.css";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+
+//react redux 9,10
+import { defaultActionUpdateUser } from "../redux/userSlice";
+// import { customizedActionUpdateUser } from "../redux/apiCalls";
 
 const initialState = {
   name: "",
@@ -17,6 +22,11 @@ const AddEdit = () => {
 
   const { id } = useParams();
 
+  //react redux 26,28
+  const user = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const addUser = async (data) => {
@@ -27,6 +37,8 @@ const AddEdit = () => {
   };
 
   const updateUser = async (data, id) => {
+    let name = data.name;
+    console.log(name);
     const response = await axios.put(`http://localhost:5000/user/${id}`, data);
     if (response.status === 200) {
       toast.success(response.data);
@@ -39,8 +51,15 @@ const AddEdit = () => {
       toast.error("please fill the fields");
     } else if (!id) {
       addUser(state);
+      //customizedActionUpdateUser({name,email,contact},dispatch)
     } else {
       updateUser(state, id);
+
+      //react customized actions
+      //customizedActionUpdateUser({name,email,contact},dispatch)
+
+      //redux default actions
+      dispatch(defaultActionUpdateUser({ name, email, contact }));
     }
     setTimeout(() => {
       navigate("/");
@@ -79,7 +98,7 @@ const AddEdit = () => {
           type="text"
           id="name"
           name="name"
-          placeholder="enter your name ..."
+          placeholder={user.name}
           onChange={handleInputChange}
           value={name}
         />
@@ -88,7 +107,7 @@ const AddEdit = () => {
           type="email"
           id="email"
           name="email"
-          placeholder="enter your email ..."
+          placeholder={user.email}
           onChange={handleInputChange}
           value={email}
         />
@@ -97,7 +116,7 @@ const AddEdit = () => {
           type="number"
           id="contact"
           name="contact"
-          placeholder="enter your contact ..."
+          placeholder={user.contact}
           onChange={handleInputChange}
           value={contact}
         />
