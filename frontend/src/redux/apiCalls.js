@@ -18,7 +18,7 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 
-//Get
+//Get all users
 export const getUsers = async (dispatch) => {
   dispatch(getUserStart());
   try {
@@ -29,7 +29,7 @@ export const getUsers = async (dispatch) => {
   }
 };
 
-//Get
+//Get single user 
 export const getSingleUser = async (id, dispatch) => {
   dispatch(getSingleUserStart());
   try {
@@ -40,7 +40,7 @@ export const getSingleUser = async (id, dispatch) => {
   }
 };
 
-//Add
+//Add user
 export const addUser = async (user, dispatch) => {
   dispatch(addUserStart());
   try {
@@ -62,7 +62,7 @@ export const addUser = async (user, dispatch) => {
   }
 };
 
-//Delete
+//Delete user
 export const deleteUser = async (id, dispatch) => {
   dispatch(deleteUserStart());
   try {
@@ -84,7 +84,7 @@ export const deleteUser = async (id, dispatch) => {
   }
 };
 
-//Update
+//Update user
 export const updateUser = async (user, id, dispatch) => {
   dispatch(updateUserStart());
   try {

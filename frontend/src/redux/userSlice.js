@@ -11,7 +11,7 @@ export const userSlice = createSlice({
 
   //react customized ations method
   reducers: {
-    
+
     //Get all users
     getUserStart: (state) => {
       state.pending = true;
@@ -26,7 +26,7 @@ export const userSlice = createSlice({
       state.pending = false;
     },
 
-    //Get all users
+    //Get single user
     getSingleUserStart: (state) => {
       state.pending = true;
       state.error = false;
